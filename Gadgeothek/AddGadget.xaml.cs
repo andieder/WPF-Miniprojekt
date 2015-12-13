@@ -19,9 +19,19 @@ namespace Gadgeothek
     /// </summary>
     public partial class AddGadget : Window
     {
-        public AddGadget()
+        public AddGadget ()
         {
             InitializeComponent();
+        }
+
+        private void Cancel_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void Save_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

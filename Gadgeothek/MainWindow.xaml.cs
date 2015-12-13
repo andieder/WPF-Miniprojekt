@@ -45,5 +45,17 @@ namespace Gadgeothek
             service.GetAllReservations().ForEach((r) => Reservations.Add(r));
             service.GetAllLoans().ForEach((l) => Loans.Add(l));
         }
+
+        private void ButtonAdd_OnClick(object sender, RoutedEventArgs e)
+        {
+            Window addWindow = new AddGadget();
+            addWindow.Show();
+        }
+
+        private void ButtonEdit_OnClick(object sender, RoutedEventArgs e)
+        {
+            Window editWindow = new EditGadget();
+            editWindow.Show();
+        }
     }
 }

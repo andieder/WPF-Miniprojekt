@@ -11,8 +11,8 @@
         <TabItem Header="Gadgets" Background="Azure">
             <Grid Margin="0,0,0,38">
                 <TextBox x:Name="SearchGadget" HorizontalAlignment="Left" Height="23" Margin="230,12,0,0" TextWrapping="Wrap" Text="Suchen" VerticalAlignment="Top" Width="120"/>
-                <Button x:Name="ButtonAadd" Content="Gadget hinzufügen" Height="28" HorizontalAlignment="Left" Margin="360,10,0,0" VerticalAlignment="Top" Width="150"/>
-                <Button x:Name="ButtonEdit" Content="Gadget bearbeiten"  Height="28" HorizontalAlignment="Left" Margin="520,10,0,0" VerticalAlignment="Top" Width="150"/>
+                <Button x:Name="ButtonAdd" Content="Gadget hinzufügen" Height="28" HorizontalAlignment="Left" Margin="360,10,0,0" VerticalAlignment="Top" Width="150" Click="ButtonAdd_OnClick"/>
+                <Button x:Name="ButtonEdit" Content="Gadget bearbeiten"  Height="28" HorizontalAlignment="Left" Margin="520,10,0,0" VerticalAlignment="Top" Width="150" Click="ButtonEdit_OnClick"/>
                     <DataGrid x:Name="ListViewGadget" HorizontalAlignment="Center" Height="460" Margin="0,50,0,0" VerticalAlignment="Top" Width="874"
                           ItemsSource="{Binding Gadgets}">
                         <DataGrid.Columns>

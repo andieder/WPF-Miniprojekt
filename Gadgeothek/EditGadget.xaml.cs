@@ -15,13 +15,23 @@ using System.Windows.Shapes;
 namespace Gadgeothek
 {
     /// <summary>
-    /// Interaction logic for AddGadget.xaml
+    /// Interaction logic for EditGadget.xaml
     /// </summary>
-    public partial class AddGadget : Window
+    public partial class EditGadget : Window
     {
-        public AddGadget()
+        public EditGadget()
         {
             InitializeComponent();
+        }
+
+        private void Cancel_OnClick(object sender, RoutedEventArgs e)
+        {
+                this.Close();
+        }
+
+        private void Save_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }
