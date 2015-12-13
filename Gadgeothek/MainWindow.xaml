@@ -1,0 +1,111 @@
+﻿<Window x:Class="Gadgeothek.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gadgeothek"
+        mc:Ignorable="d"
+        Title="Gadgeothek" Height="600" Width="900">
+    <Grid>
+    <TabControl x:Name="TabControl" HorizontalAlignment="Left" Height="570" VerticalAlignment="Top" Width="890">
+        <TabItem Header="Gadgets" Background="Azure">
+            <Grid Margin="0,0,0,38">
+                <TextBox x:Name="SearchGadget" HorizontalAlignment="Left" Height="23" Margin="230,12,0,0" TextWrapping="Wrap" Text="Suchen" VerticalAlignment="Top" Width="120"/>
+                <Button x:Name="ButtonAadd" Content="Gadget hinzufügen" Height="28" HorizontalAlignment="Left" Margin="360,10,0,0" VerticalAlignment="Top" Width="150"/>
+                <Button x:Name="ButtonEdit" Content="Gadget bearbeiten"  Height="28" HorizontalAlignment="Left" Margin="520,10,0,0" VerticalAlignment="Top" Width="150"/>
+                    <DataGrid x:Name="ListViewGadget" HorizontalAlignment="Center" Height="460" Margin="0,50,0,0" VerticalAlignment="Top" Width="874"
+                          ItemsSource="{Binding Gadgets}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding InventoryNumber}" Header="ID" Width="*"/>
+                            <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="*"/>
+                            <DataGridTextColumn Binding="{Binding Manufacter}" Header="Hersteller" Width="*"/>
+                            <DataGridTextColumn Binding="{Binding Price}" Header="Preis" Width="*"/>
+                            <DataGridTextColumn Binding="{Binding Condition}" Header="Zustand" Width="*"/>
+                            <DataGridTextColumn Binding="{Binding FreeFrom}" Header="Verfügbar ab" Width="*"/>
+                            <DataGridTextColumn Binding="{Binding LoanFrom}" Header="Ausgeliehen an" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+            </Grid>
+        </TabItem>
+            <TabItem Header="Ausleihe" Background="Azure">
+
+                <Grid Margin="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="214*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="SearchLoan" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="Suchen" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
+
+                    <ListView x:Name="ListViewCustomer" HorizontalAlignment="Left" Height="480" Margin="5,50,0,0" VerticalAlignment="Top" Width="430"
+                          ItemsSource="{Binding Customers}" Grid.ColumnSpan="2">
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="Customer Infos">
+                                <GridViewColumn DisplayMemberBinding="{Binding Studentnumber}" Header="KundenNr" Width="80"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" Width="80"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Reservation}" Header="Reservationen" Width="80"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Loan}" Header="Ausleihen" Width="80"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding FailLoans}" Header="Hat überfällige" Width="80"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+
+                    <GridSplitter x:Name="GridSplitter" HorizontalAlignment="Stretch" Height="500" VerticalAlignment="Top" Width="15" Margin="412.109,50,429,0" Grid.Column="1"/>
+                    <GroupBox x:Name="InfoBoxCustomer" Header="CustomerName" HorizontalAlignment="Left" Margin="430,50,0,0" FontWeight="Bold" VerticalAlignment="Top" BorderThickness="1" BorderBrush="Black" Height="484" Width="411" Grid.Column="1">
+                        <Grid>
+                            <StackPanel>
+                                <StackPanel>
+                                    <TextBlock x:Name="ReservationInfo" HorizontalAlignment="Left" Height="28" Margin="292,10,0,0" TextWrapping="Wrap" Text="ResInfo" VerticalAlignment="Top" Width="78"/>
+                                    <ListView x:Name="ListViewReservation" HorizontalAlignment="Left" Height="100" Margin="0,-10,0,0" VerticalAlignment="Top" Width="400" FontWeight="Normal"
+                          ItemsSource="{Binding Reservations}">
+                                        <ListView.View>
+                                            <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="Reservation Infos">
+                                                <GridViewColumn DisplayMemberBinding="{Binding Gadget}" Header="Name" Width="99"/>
+                                                <GridViewColumn DisplayMemberBinding="{Binding Queue}" Header="Warteschlange" Width="99"/>
+                                                <GridViewColumn DisplayMemberBinding="{Binding Loan}" Header="Ausleihen" Width="99"/>
+                                                <GridViewColumn DisplayMemberBinding="{Binding Delete}" Header="Löschen" Width="99"/>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                    <TextBlock x:Name="NewReservationText" HorizontalAlignment="Left" Height="28" Margin="50,5,0,0" TextWrapping="Wrap" Text="Neue Reservation" VerticalAlignment="Top" />
+                                    <StackPanel Orientation="Horizontal" Margin="0">
+                                        <TextBlock x:Name="IdResTag" HorizontalAlignment="Left" Height="28" Margin="5,5,0,0" TextWrapping="Wrap" Text="ID" VerticalAlignment="Top" />
+                                        <ComboBox x:Name="ComboBoxRes" HorizontalAlignment="Left" Height="28" Margin="5,0,0,0" VerticalAlignment="Top" Width="180"/>
+                                        <Button x:Name="ResAdd" Content="Reservieren" Height="28" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Top" Width="90"/>
+                                    </StackPanel>
+                                    <TextBlock x:Name="noReservationText" HorizontalAlignment="Left" Height="28" Margin="5,0,0,0" TextWrapping="Wrap" Text="NotMoreReservation: Keine neuen Reservationen möglich(Bereits drei Reservationen)" VerticalAlignment="Top" />
+                                </StackPanel>
+
+                                <StackPanel>
+                                    <TextBlock x:Name="LoanInfo" HorizontalAlignment="Left" Height="28" Margin="292,10,0,0" TextWrapping="Wrap" Text="LoanInfo" VerticalAlignment="Top" Width="78"/>
+                                    <ListView x:Name="ListViewLoan" HorizontalAlignment="Left" Height="100" Margin="0,-10,0,0" VerticalAlignment="Top" Width="400" FontWeight="Normal"
+                          ItemsSource="{Binding Loans}">
+                                        <ListView.View>
+                                            <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="Loan Infos">
+                                                <GridViewColumn DisplayMemberBinding="{Binding GadgetId}" Header="Name" Width="66"/>
+                                                <GridViewColumn DisplayMemberBinding="{Binding PickupDate}" Header="Ausgeliehen am" Width="66"/>
+                                                <GridViewColumn DisplayMemberBinding="{Binding ReturnDate}" Header="Zurück bis" Width="66"/>
+                                                <GridViewColumn DisplayMemberBinding="{Binding OutOfDate}" Header="Fällig" Width="66"/>
+                                                <GridViewColumn DisplayMemberBinding="{Binding Reservation}" Header="Reserviert" Width="66"/>
+                                                <GridViewColumn DisplayMemberBinding="{Binding WasReturned}" Header="Rücknahme" Width="66"/>
+                                            </GridView>
+                                        </ListView.View>
+                                    </ListView>
+                                    <TextBlock x:Name="NewLoanText" HorizontalAlignment="Left" Height="28" Margin="50,5,0,0" TextWrapping="Wrap" Text="Neue Ausleihe" VerticalAlignment="Top" />
+                                    <StackPanel Orientation="Horizontal" Margin="0">
+                                        <TextBlock x:Name="IdLoanTag" HorizontalAlignment="Left" Height="28" Margin="5,5,0,0" TextWrapping="Wrap" Text="ID" VerticalAlignment="Top" />
+                                        <ComboBox x:Name="ComboBoxLoan" HorizontalAlignment="Left" Height="28" Margin="5,0,0,0" VerticalAlignment="Top" Width="180"/>
+                                        <Button x:Name="LoanAdd" Content="Ausleihen" Height="28" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Top" Width="90"/>
+                                    </StackPanel>
+                                    <TextBlock x:Name="NoLoanText" HorizontalAlignment="Left" Height="28" Margin="5,0,0,0" TextWrapping="Wrap" Text="NotMoreLoans: Keine neuen Ausleihen möglich(Überfällige Vorhanden)" VerticalAlignment="Top" />
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+        
+    </TabControl>
+    </Grid>
+</Window>
+
