@@ -10,19 +10,21 @@
     <TabControl x:Name="TabControl" HorizontalAlignment="Left" Height="570" VerticalAlignment="Top" Width="890">
         <TabItem Header="Gadgets" Background="Azure">
             <Grid Margin="0,0,0,38">
-                <TextBox x:Name="SearchGadget" HorizontalAlignment="Left" Height="23" Margin="230,12,0,0" TextWrapping="Wrap" Text="Suchen" VerticalAlignment="Top" Width="120"/>
-                <Button x:Name="ButtonAdd" Content="Gadget hinzufügen" Height="28" HorizontalAlignment="Left" Margin="360,10,0,0" VerticalAlignment="Top" Width="150" Click="ButtonAdd_OnClick"/>
-                <Button x:Name="ButtonEdit" Content="Gadget bearbeiten"  Height="28" HorizontalAlignment="Left" Margin="520,10,0,0" VerticalAlignment="Top" Width="150" Click="ButtonEdit_OnClick"/>
+<!--                <TextBox x:Name="SearchGadget" HorizontalAlignment="Left" Height="23" Margin="230,12,0,0" TextWrapping="Wrap" Text="Suchen" VerticalAlignment="Top" Width="120"/>-->
+                <Button x:Name="ButtonAdd" Content="Gadget hinzufügen" Height="28" HorizontalAlignment="Left" Margin="200,10,0,0" VerticalAlignment="Top" Width="150" Click="ButtonAdd_OnClick"/>
+                <Button x:Name="ButtonEdit" Content="Gadget bearbeiten"  Height="28" HorizontalAlignment="Left" Margin="360,10,0,0" VerticalAlignment="Top" Width="150" Click="ButtonEdit_OnClick"/>
+                <Button x:Name="ButtonDelete" Content="Gadget löschen"  Height="28" HorizontalAlignment="Left" Margin="520,10,0,0" VerticalAlignment="Top" Width="150" Click="ButtonDelete_OnClick"/>
                     <DataGrid x:Name="ListViewGadget" HorizontalAlignment="Center" Height="460" Margin="0,50,0,0" VerticalAlignment="Top" Width="874"
-                          ItemsSource="{Binding Gadgets}">
+                          SelectedItem="{Binding SelectedGadget, Mode=TwoWay}" SelectionMode="Single" IsReadOnly="True" 
+                              ItemsSource="{Binding Gadgets}" AutoGenerateColumns="False">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding InventoryNumber}" Header="ID" Width="*"/>
-                            <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="*"/>
-                            <DataGridTextColumn Binding="{Binding Manufacter}" Header="Hersteller" Width="*"/>
-                            <DataGridTextColumn Binding="{Binding Price}" Header="Preis" Width="*"/>
-                            <DataGridTextColumn Binding="{Binding Condition}" Header="Zustand" Width="*"/>
-                            <DataGridTextColumn Binding="{Binding FreeFrom}" Header="Verfügbar ab" Width="*"/>
-                            <DataGridTextColumn Binding="{Binding LoanFrom}" Header="Ausgeliehen an" Width="*"/>
+                            <DataGridTextColumn Binding="{Binding InventoryNumber}" Header="ID" Width="*" />
+                            <DataGridTextColumn Binding="{Binding Name}" Header="Name" Width="*" />
+                            <DataGridTextColumn Binding="{Binding Manufacturer}" Header="Hersteller" Width="*" />
+                            <DataGridTextColumn Binding="{Binding Price}" Header="Preis" Width="*" />
+                            <DataGridTextColumn Binding="{Binding Condition}" Header="Zustand" Width="*" />
+<!--                            <DataGridTextColumn Binding="{Binding ReturnDate}" Header="Verfügbar ab" Width="*" />
+                            <DataGridTextColumn Binding="{Binding Customer.Name}" Header="Ausgeliehen an" Width="*" />-->
                         </DataGrid.Columns>
                     </DataGrid>
 
@@ -38,12 +40,12 @@
                     <TextBox x:Name="SearchLoan" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="Suchen" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
 
                     <ListView x:Name="ListViewCustomer" HorizontalAlignment="Left" Height="480" Margin="5,50,0,0" VerticalAlignment="Top" Width="430"
-                          ItemsSource="{Binding Customers}" Grid.ColumnSpan="2">
+                          ItemsSource="{Binding Reservations}" Grid.ColumnSpan="2">
                         <ListView.View>
                             <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="Customer Infos">
-                                <GridViewColumn DisplayMemberBinding="{Binding Studentnumber}" Header="KundenNr" Width="80"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" Width="80"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding Reservation}" Header="Reservationen" Width="80"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Customer.Studentnumber}" Header="KundenNr" Width="80"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Customer.Name}" Header="Name" Width="80"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Gadget.Name}" Header="Reservationen" Width="80"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding Loan}" Header="Ausleihen" Width="80"/>
                                 <GridViewColumn DisplayMemberBinding="{Binding FailLoans}" Header="Hat überfällige" Width="80"/>
                             </GridView>

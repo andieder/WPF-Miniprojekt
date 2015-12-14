@@ -11,6 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ch.hsr.wpf.gadgeothek.domain;
+using ch.hsr.wpf.gadgeothek.service;
+using Condition = ch.hsr.wpf.gadgeothek.domain.Condition;
 
 namespace Gadgeothek
 {
@@ -19,8 +22,42 @@ namespace Gadgeothek
     /// </summary>
     public partial class AddGadget : Window
     {
-        public AddGadget ()
+        private readonly LibraryAdminService _service;
+
+        private Condition _selectedCondition;
+
+        public Condition SelectedCondition 
         {
+            get { return _selectedCondition; }
+            set
+            {
+                if (_selectedCondition == value)
+                {
+                    return;
+                }
+                _selectedCondition = value;
+                //this.OnPropertyChanged(c => c.SelectedCondition);
+            }
+        }
+
+        public List<Condition> Conditions { get; set; }
+
+        private void SetConditions()
+        {
+            Array values = Enum.GetValues((typeof(Condition)));
+
+            Conditions = new List<Condition>();
+            foreach (Condition value in values)
+            {
+                Conditions.Add(value);
+            }
+        }
+
+
+        public AddGadget (LibraryAdminService service)
+        {
+            _service = service;
+            SetConditions();
             InitializeComponent();
         }
 
@@ -31,7 +68,16 @@ namespace Gadgeothek
 
         private void Save_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+
+            Gadget newGadget = new Gadget(AddName.Text)
+            {
+                Name = AddName.Text,
+                Manufacturer = Manufacturer.Text,
+                Price = Double.Parse(Price.Text),
+  //              Condition = ch.hsr.wpf.gadgeothek.domain.Condition.ToString(dataFromCondition);
+            };
+
+            _service.AddGadget(newGadget);
         }
     }
 }
