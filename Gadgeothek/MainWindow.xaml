@@ -10,7 +10,7 @@
     <TabControl x:Name="TabControl" HorizontalAlignment="Left" Height="570" VerticalAlignment="Top" Width="890">
         <TabItem Header="Gadgets" Background="Azure">
                 <Grid Margin="0,0,0,38">
-                    <Button x:Name="ButtonAdd" Content="Gadget hinzufügen" Height="28" HorizontalAlignment="Left" Margin="200,10,0,0" VerticalAlignment="Top" Width="150" Click="ButtonAdd_OnClick"/>
+                <Button x:Name="ButtonAdd" Content="Gadget hinzufügen" Height="28" HorizontalAlignment="Left" Margin="200,10,0,0" VerticalAlignment="Top" Width="150" Click="ButtonAdd_OnClick"/>
                 <Button x:Name="ButtonEdit" Content="Gadget bearbeiten"  Height="28" HorizontalAlignment="Left" Margin="360,10,0,0" VerticalAlignment="Top" Width="150" Click="ButtonEdit_OnClick"/>
                 <Button x:Name="ButtonDelete" Content="Gadget löschen"  Height="28" HorizontalAlignment="Left" Margin="520,10,0,0" VerticalAlignment="Top" Width="150" Click="ButtonDelete_OnClick"/>
                     <DataGrid x:Name="ListViewGadget" HorizontalAlignment="Center" Height="460" Margin="0,50,0,0" VerticalAlignment="Top" Width="874"

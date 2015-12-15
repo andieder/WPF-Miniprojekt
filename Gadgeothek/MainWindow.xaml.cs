@@ -86,15 +86,14 @@ namespace Gadgeothek
                 Window editWindow = new AddGadget(_service, false, SelectedGadget);
                 editWindow.Title = "Edit Gadget";
                 editWindow.ShowDialog();
+                RefreshGadgetView();
             }
-
-            RefreshGadgetView();
         }
 
         private void ButtonDelete_OnClick(object sender, RoutedEventArgs e)
         {
 
-            if (
+            if (SelectedGadget != null &&
                 MessageBox.Show("Sind Sie sicher, dass Sie " + SelectedGadget.Name + " löschen wollen?", "Sind Sie sicher?" , MessageBoxButton.YesNo, MessageBoxImage.Question) ==
                 MessageBoxResult.Yes)
             {
