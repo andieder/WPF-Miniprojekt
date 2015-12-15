@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using ch.hsr.wpf.gadgeothek.domain;
 using ch.hsr.wpf.gadgeothek.service;
 using Condition = ch.hsr.wpf.gadgeothek.domain.Condition;
+using System.Collections.ObjectModel;
 
 namespace Gadgeothek
 {
@@ -26,38 +27,33 @@ namespace Gadgeothek
 
         private Condition _selectedCondition;
 
-        public Condition SelectedCondition 
+        public Condition SelectedCondition
         {
             get { return _selectedCondition; }
             set
             {
-                if (_selectedCondition.Equals(value))
+                if (_selectedCondition == value)
                 {
                     return;
                 }
                 _selectedCondition = value;
-                //this.OnPropertyChanged(c => c.SelectedCondition);
             }
         }
 
-    /*    public List<Condition> Conditions { get; set; }
+        public Gadget EditGadget { get; set; }
 
-        private void SetConditions()
+            public bool IsNew { get; set; }
+
+        public AddGadget(LibraryAdminService service, bool isNew, Gadget editGadget)
         {
-            var values = Enum.GetValues((typeof(Condition)));
 
-            Conditions = new List<Condition>();
-            foreach (Condition value in values)
-            {
-                Conditions.Add(value);
-            }
-        }*/
-
-
-        public AddGadget (LibraryAdminService service)
-        {
             _service = service;
+            EditGadget = editGadget;
+            IsNew = isNew;
+
             InitializeComponent();
+            DataContext = EditGadget;
+
         }
 
         private void Cancel_OnClick(object sender, RoutedEventArgs e)
@@ -67,15 +63,15 @@ namespace Gadgeothek
 
         private void Save_OnClick(object sender, RoutedEventArgs e)
         {
-
-            Gadget newGadget = new Gadget(AddName.Text)
+            if (IsNew)
             {
-                Name = AddName.Text,
-                Manufacturer = Manufacturer.Text,
-                Price = Double.Parse(Price.Text),
-                Condition = SelectedCondition
-            };
-            _service.AddGadget(newGadget);
+                _service.AddGadget(EditGadget);
+            }
+            else
+            {
+                _service.UpdateGadget(EditGadget);
+            }
+            
             this.Close();
         }
     }

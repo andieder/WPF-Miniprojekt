@@ -7,7 +7,7 @@
         xmlns:SystemColors="clr-namespace:System;assembly=mscorlib"
         xmlns:domain="clr-namespace:ch.hsr.wpf.gadgeothek.domain;assembly=ch.hsr.wpf.gadgeothek"
         mc:Ignorable="d"
-        Title="AddGadget" Height="300" Width="300">
+        Title="AddGadget" Height="300" Width="320">
     <Window.Resources>
         <ObjectDataProvider x:Key="Conditions"
             MethodName="GetValues" ObjectType="{x:Type SystemColors:Enum}">
@@ -26,11 +26,11 @@
                 <Label Content="Condition" VerticalAlignment="Top" Margin="5" HorizontalAlignment="Left" />
             </StackPanel>
             <StackPanel Width="170" HorizontalAlignment="Left">
-                <Label x:Name="IdValue" Width="150" Height="26" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Center" Content="0" />
-                <TextBox x:Name="AddName" Width="150" Height="26" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Center" />
-                <TextBox x:Name="Manufacturer" Width="150" Height="26" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Center" />
-                <TextBox x:Name="Price" Width="150" Height="26" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Center" />
-                <ComboBox ItemsSource="{Binding Source={StaticResource Conditions}}" SelectedItem="{Binding SelectedCondition}" 
+                <Label x:Name="IdValue" Width="150" Height="26" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Center" Content="{Binding InventoryNumber}" />
+                <TextBox x:Name="AddName" Width="150" Height="26" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Center" Text="{Binding Name}" />
+                <TextBox x:Name="Manufacturer" Width="150" Height="26" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Center" Text="{Binding Manufacturer}" />
+                <TextBox x:Name="Price" Width="150" Height="26" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Center" Text="{Binding Price}" />
+                <ComboBox ItemsSource="{Binding Source={StaticResource Conditions}}" SelectedItem="{Binding Condition}" 
                          x:Name="Condition" Width="150" Height="26" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Center" />
                 <Grid Height="60">
                     <Button x:Name="Cancel" Height="28" Width="50" Content="Cancel" Margin="15" HorizontalAlignment="Left" Click="Cancel_OnClick" />

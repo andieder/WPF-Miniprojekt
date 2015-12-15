@@ -39,21 +39,19 @@
                     </Grid.ColumnDefinitions>
                     <TextBox x:Name="SearchLoan" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" Text="Suchen" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
 
-                    <ListView x:Name="ListViewCustomer" HorizontalAlignment="Left" Height="480" Margin="5,50,0,0" VerticalAlignment="Top" Width="430"
-                          ItemsSource="{Binding Reservations}" Grid.ColumnSpan="2">
-                        <ListView.View>
-                            <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="Customer Infos">
-                                <GridViewColumn DisplayMemberBinding="{Binding Customer.Studentnumber}" Header="KundenNr" Width="80"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding Customer.Name}" Header="Name" Width="80"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding Gadget.Name}" Header="Reservationen" Width="80"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding Loan}" Header="Ausleihen" Width="80"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding FailLoans}" Header="Hat überfällige" Width="80"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                    <DataGrid x:Name="ListViewCustomer" HorizontalAlignment="Left" Height="480" Margin="5,50,0,0" VerticalAlignment="Top" Width="430" Grid.ColumnSpan="2" 
+                          ItemsSource="{Binding Loans}" SelectedItem="{Binding SelectedLoans, Mode=TwoWay}" SelectionMode="Single" AutoGenerateColumns="False"  IsReadOnly="True" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Customer.Studentnumber}" Header="KundenNr" Width="*"/>
+                            <DataGridTextColumn Binding="{Binding Customer.Name}" Header="Name" Width="*"/>
+                            <DataGridTextColumn Binding="{Binding Gadget.Name}" Header="Ausleihe" Width="*"/>
+                            <DataGridTextColumn Binding="{Binding PickupDate}" Header="Abholdatum" Width="*"/>
+                            <DataGridTextColumn Binding="{Binding ReturnDate}" Header="Rückgabedatum" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
 
                     <GridSplitter x:Name="GridSplitter" HorizontalAlignment="Stretch" Height="500" VerticalAlignment="Top" Width="15" Margin="412.109,50,429,0" Grid.Column="1"/>
-                    <GroupBox x:Name="InfoBoxCustomer" Header="CustomerName" HorizontalAlignment="Left" Margin="430,50,0,0" FontWeight="Bold" VerticalAlignment="Top" BorderThickness="1" BorderBrush="Black" Height="484" Width="411" Grid.Column="1">
+                    <GroupBox x:Name="InfoBoxCustomer" Header="{Binding SelectedLoans}" HorizontalAlignment="Left" Margin="430,50,0,0" FontWeight="Bold" VerticalAlignment="Top" BorderThickness="1" BorderBrush="Black" Height="484" Width="411" Grid.Column="1">
                         <Grid>
                             <StackPanel>
                                 <StackPanel>

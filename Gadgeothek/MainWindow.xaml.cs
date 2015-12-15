@@ -1,20 +1,9 @@
 ﻿using ch.hsr.wpf.gadgeothek.domain;
 using ch.hsr.wpf.gadgeothek.service;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Gadgeothek
 {
@@ -24,29 +13,44 @@ namespace Gadgeothek
     public partial class MainWindow : Window
     {
 
-        private Gadget _selectedGadget;
+        private Gadget _selectedGadget; 
 
         public Gadget SelectedGadget
         {
             get { return _selectedGadget; }
             set
             {
-                if (_selectedGadget == value)
+                if (_selectedGadget != null && _selectedGadget.Equals(value))
                 {
                    return;
                 }
                 _selectedGadget = value;
-                //this.OnPropertyChanged(p => p.SelectedGadget);
             }
         }
 
-        private readonly LibraryAdminService _service = new LibraryAdminService("http://mge1.dev.ifs.hsr.ch");
+        private Loan _selectedLoan;
+
+        public Loan SelectedLoan
+        {
+            get { return _selectedLoan; }
+            set
+            {
+                if (_selectedLoan != null && _selectedLoan.Equals(value))
+                {
+                    return;
+                }
+                _selectedLoan = value;
+            }
+        }
+
+        private readonly LibraryAdminService _service = new LibraryAdminService("http://mge8.dev.ifs.hsr.ch");
 
         public ObservableCollection<Gadget> Gadgets { get; set; }
         public ObservableCollection<Customer> Customers { get; set; } 
         public ObservableCollection<Reservation> Reservations { get; set; } 
         public ObservableCollection<Loan> Loans { get; set; }
         public ObservableCollection<Loan> GadgetsLoans { get; set; }
+
         public MainWindow()
         {
             Gadgets = new ObservableCollection<Gadget>();
@@ -58,66 +62,49 @@ namespace Gadgeothek
             DataContext = this;
             InitializeComponent();
 
-            
+            RefreshGadgetView();
 
-            _service.GetAllGadgets().ForEach((g) => Gadgets.Add(g));
-            _service.GetAllCustomers().ForEach((c) => Customers.Add(c));
-            _service.GetAllReservations().ForEach((r) => Reservations.Add(r));
-            _service.GetAllLoans().ForEach((l) => Loans.Add(l));
-/*            _service.GetAllLoans().ForEach((gl) =>
-            {
-                if (gl.Gadget != null)
-                {
-                    GadgetsLoans.Add(gl);
-                }
-                
-            });*/
+            WindowLoader();
+        }
 
-/*            private void Action(Loan gl)
-            {
-                var query = from gl in Loans
-                            where gl.GadgetId != null
-                            select gl;
-                foreach (var gls in query)
-                {
-                    GadgetsLoans.Add(gls);
-                }
-            }*/
-
-
-
-            /*            var freeFromQuery = from loan in Loans
-                                            join gadget in Gadgets on loan.GadgetId equals gadget.InventoryNumber
-                                            select loan.ReturnDate;
-
-                        foreach (var free in freeFromQuery)
-                        {
-                            FreeFrom.Add(free);
-                        }
-
-                        var loanFromQuery = from loan in Loans
-                                            join customer in Customers on loan.CustomerId equals customer.Studentnumber
-                                            select customer.Name;*/
+        private void WindowLoader()
+        {
+            DispatcherTimer dispatcher = new DispatcherTimer();
+            dispatcher.Tick += new EventHandler(dispatcherTimer);
+            dispatcher.Interval = new TimeSpan(0, 0, 1);
+            dispatcher.Start();
         }
 
         private void ButtonAdd_OnClick(object sender, RoutedEventArgs e)
         {
-            Window addWindow = new AddGadget(_service);
-            addWindow.Show();
+            Window addWindow = new AddGadget(_service, true, new Gadget(""));
+            addWindow.Title = "Add new Gadget";
+            addWindow.ShowDialog();
             RefreshGadgetView();
         }
 
         private void ButtonEdit_OnClick(object sender, RoutedEventArgs e)
         {
-            Window editWindow = new EditGadget(_service, SelectedGadget);
-            editWindow.Show();
+            if (SelectedGadget != null)
+            {
+                Window editWindow = new AddGadget(_service, false, SelectedGadget);
+                editWindow.Title = "Edit Gadget";
+                editWindow.ShowDialog();
+            }
+
             RefreshGadgetView();
         }
 
         private void ButtonDelete_OnClick(object sender, RoutedEventArgs e)
         {
-            _service.DeleteGadget(SelectedGadget);
-            RefreshGadgetView();
+
+            if (
+                MessageBox.Show("Sind Sie sicher, dass Sie " + SelectedGadget.Name + " löschen wollen?", "Sind Sie sicher?" , MessageBoxButton.YesNo, MessageBoxImage.Question) ==
+                MessageBoxResult.Yes)
+            {
+                _service.DeleteGadget(SelectedGadget);
+                RefreshGadgetView();
+            }
 
         }
 
@@ -126,5 +113,23 @@ namespace Gadgeothek
             Gadgets.Clear();
             _service.GetAllGadgets().ForEach((g) => Gadgets.Add(g));
         }
+
+        private void dispatcherTimer(object sender, EventArgs e)
+        {
+            RefreshView();
+        }
+
+        public void RefreshView()
+        {   
+            Customers.Clear();
+            Reservations.Clear();
+            Loans.Clear();
+            _service.GetAllCustomers().ForEach((c) => Customers.Add(c));
+            _service.GetAllReservations().ForEach((r) => Reservations.Add(r));
+            _service.GetAllLoans().ForEach((l) => Loans.Add(l));
+
+        }
+
     }
+
 }
