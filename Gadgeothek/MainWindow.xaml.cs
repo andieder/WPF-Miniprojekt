@@ -33,7 +33,7 @@ namespace Gadgeothek
             {
                 if (_selectedGadget == value)
                 {
-                    return;
+                   return;
                 }
                 _selectedGadget = value;
                 //this.OnPropertyChanged(p => p.SelectedGadget);
@@ -104,20 +104,25 @@ namespace Gadgeothek
         {
             Window addWindow = new AddGadget(_service);
             addWindow.Show();
+            RefreshGadgetView();
         }
 
         private void ButtonEdit_OnClick(object sender, RoutedEventArgs e)
         {
-            Window editWindow = new EditGadget();
+            Window editWindow = new EditGadget(_service, SelectedGadget);
             editWindow.Show();
-            Gadgets.Clear();
-            _service.GetAllGadgets().ForEach((g) => Gadgets.Add(g));
+            RefreshGadgetView();
         }
 
         private void ButtonDelete_OnClick(object sender, RoutedEventArgs e)
         {
             _service.DeleteGadget(SelectedGadget);
+            RefreshGadgetView();
 
+        }
+
+        public void RefreshGadgetView()
+        {
             Gadgets.Clear();
             _service.GetAllGadgets().ForEach((g) => Gadgets.Add(g));
         }

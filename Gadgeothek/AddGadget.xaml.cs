@@ -31,7 +31,7 @@ namespace Gadgeothek
             get { return _selectedCondition; }
             set
             {
-                if (_selectedCondition == value)
+                if (_selectedCondition.Equals(value))
                 {
                     return;
                 }
@@ -40,24 +40,23 @@ namespace Gadgeothek
             }
         }
 
-        public List<Condition> Conditions { get; set; }
+    /*    public List<Condition> Conditions { get; set; }
 
         private void SetConditions()
         {
-            Array values = Enum.GetValues((typeof(Condition)));
+            var values = Enum.GetValues((typeof(Condition)));
 
             Conditions = new List<Condition>();
             foreach (Condition value in values)
             {
                 Conditions.Add(value);
             }
-        }
+        }*/
 
 
         public AddGadget (LibraryAdminService service)
         {
             _service = service;
-            SetConditions();
             InitializeComponent();
         }
 
@@ -74,10 +73,10 @@ namespace Gadgeothek
                 Name = AddName.Text,
                 Manufacturer = Manufacturer.Text,
                 Price = Double.Parse(Price.Text),
-  //              Condition = ch.hsr.wpf.gadgeothek.domain.Condition.ToString(dataFromCondition);
+                Condition = SelectedCondition
             };
-
             _service.AddGadget(newGadget);
+            this.Close();
         }
     }
 }

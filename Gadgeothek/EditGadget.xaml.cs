@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ch.hsr.wpf.gadgeothek.domain;
+using ch.hsr.wpf.gadgeothek.service;
 
 namespace Gadgeothek
 {
@@ -19,9 +21,15 @@ namespace Gadgeothek
     /// </summary>
     public partial class EditGadget : Window
     {
-        public EditGadget()
+        private readonly LibraryAdminService _service;
+        private Gadget _changeGadget;
+
+        public EditGadget(LibraryAdminService service, Gadget changeGadget)
         {
+            _service = service;
+            _changeGadget = changeGadget;
             InitializeComponent();
+
         }
 
         private void Cancel_OnClick(object sender, RoutedEventArgs e)
@@ -31,6 +39,8 @@ namespace Gadgeothek
 
         private void Save_OnClick(object sender, RoutedEventArgs e)
         {
+            Gadget editGadget = new Gadget();
+            _service.UpdateGadget(editGadget);
             throw new NotImplementedException();
         }
     }
