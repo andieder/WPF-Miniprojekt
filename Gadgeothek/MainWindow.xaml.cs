@@ -46,23 +46,19 @@ namespace Gadgeothek
         private readonly LibraryAdminService _service = new LibraryAdminService("http://mge8.dev.ifs.hsr.ch");
 
         public ObservableCollection<Gadget> Gadgets { get; set; }
-        public ObservableCollection<Customer> Customers { get; set; } 
-        public ObservableCollection<Reservation> Reservations { get; set; } 
+
         public ObservableCollection<Loan> Loans { get; set; }
-        public ObservableCollection<Loan> GadgetsLoans { get; set; }
 
         public MainWindow()
         {
             Gadgets = new ObservableCollection<Gadget>();
-            Customers = new ObservableCollection<Customer>();
-            Reservations = new ObservableCollection<Reservation>();
             Loans =  new ObservableCollection<Loan>();
-            GadgetsLoans = new ObservableCollection<Loan>();
 
             DataContext = this;
             InitializeComponent();
 
             RefreshGadgetView();
+            RefreshView();
 
             WindowLoader();
         }
@@ -71,7 +67,7 @@ namespace Gadgeothek
         {
             DispatcherTimer dispatcher = new DispatcherTimer();
             dispatcher.Tick += new EventHandler(dispatcherTimer);
-            dispatcher.Interval = new TimeSpan(0, 0, 1);
+            dispatcher.Interval = new TimeSpan(0, 0, 3);
             dispatcher.Start();
         }
 
@@ -121,13 +117,8 @@ namespace Gadgeothek
 
         public void RefreshView()
         {   
-            Customers.Clear();
-            Reservations.Clear();
             Loans.Clear();
-            _service.GetAllCustomers().ForEach((c) => Customers.Add(c));
-            _service.GetAllReservations().ForEach((r) => Reservations.Add(r));
             _service.GetAllLoans().ForEach((l) => Loans.Add(l));
-
         }
 
     }

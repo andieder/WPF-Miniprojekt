@@ -1,20 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 using ch.hsr.wpf.gadgeothek.domain;
 using ch.hsr.wpf.gadgeothek.service;
 using Condition = ch.hsr.wpf.gadgeothek.domain.Condition;
-using System.Collections.ObjectModel;
 
 namespace Gadgeothek
 {
@@ -25,20 +12,7 @@ namespace Gadgeothek
     {
         private readonly LibraryAdminService _service;
 
-        private Condition _selectedCondition;
-
-        public Condition SelectedCondition
-        {
-            get { return _selectedCondition; }
-            set
-            {
-                if (_selectedCondition == value)
-                {
-                    return;
-                }
-                _selectedCondition = value;
-            }
-        }
+        public Condition SelectedCondition { get; set; }
 
         public Gadget EditGadget { get; set; }
 
@@ -53,7 +27,6 @@ namespace Gadgeothek
 
             InitializeComponent();
             DataContext = EditGadget;
-
         }
 
         private void Cancel_OnClick(object sender, RoutedEventArgs e)

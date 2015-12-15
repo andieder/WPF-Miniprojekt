@@ -4,13 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Gadgeothek"
-        xmlns:SystemColors="clr-namespace:System;assembly=mscorlib"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:domain="clr-namespace:ch.hsr.wpf.gadgeothek.domain;assembly=ch.hsr.wpf.gadgeothek"
         mc:Ignorable="d"
         Title="AddGadget" Height="300" Width="320">
     <Window.Resources>
         <ObjectDataProvider x:Key="Conditions"
-            MethodName="GetValues" ObjectType="{x:Type SystemColors:Enum}">
+            MethodName="GetValues" ObjectType="{x:Type System:Enum}">
             <ObjectDataProvider.MethodParameters>
                 <x:Type TypeName="domain:Condition"/>
             </ObjectDataProvider.MethodParameters>
